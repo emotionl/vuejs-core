@@ -13,5 +13,15 @@
   },
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "todo-tree.general.tags": ["STUDY"],
+  "todo-tree.highlights.customHighlight": {
+    "STUDY": {
+      "icon": "code-review",
+      "type": "tag",
+      "iconColour": "#22E8DF",
+      "background": "#E6C62E",
+      "foreground": "#191324"
+    }
   }
 }
