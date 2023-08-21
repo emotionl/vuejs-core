@@ -200,6 +200,7 @@ export function createAppAPI<HostElement>(
   render: RootRenderFunction<HostElement>,
   hydrate?: RootHydrateFunction
 ): CreateAppFunction<HostElement> {
+  // STUDY 01 补充说明 => createApp 真正执行的内容就是这里的 createAppAPI 函数中的 createApp 函数
   return function createApp(rootComponent, rootProps = null) {
     if (!isFunction(rootComponent)) {
       rootComponent = extend({}, rootComponent)
@@ -316,6 +317,7 @@ export function createAppAPI<HostElement>(
         return app
       },
 
+      // STUDY 01 执行流程 => 04 mount
       mount(
         rootContainer: HostElement,
         isHydrate?: boolean,
@@ -330,6 +332,7 @@ export function createAppAPI<HostElement>(
                 ` you need to unmount the previous app by calling \`app.unmount()\` first.`
             )
           }
+          // STUDY 01 执行流程 => 05 createVNode
           const vnode = createVNode(rootComponent, rootProps)
           // store app context on the root VNode.
           // this will be set on the root instance on initial mount.
@@ -345,6 +348,7 @@ export function createAppAPI<HostElement>(
           if (isHydrate && hydrate) {
             hydrate(vnode as VNode<Node, Element>, rootContainer as any)
           } else {
+            // STUDY 01 执行流程 => 06 render
             render(vnode, rootContainer, isSVG)
           }
           isMounted = true

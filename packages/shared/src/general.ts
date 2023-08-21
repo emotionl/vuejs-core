@@ -162,6 +162,7 @@ export const toNumber = (val: any): any => {
   return isNaN(n) ? val : n
 }
 
+// STUDY 01 补充说明 => 获取全局对象
 let _globalThis: any
 export const getGlobalThis = (): any => {
   return (

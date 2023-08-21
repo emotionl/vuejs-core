@@ -38,6 +38,7 @@ let renderer: Renderer<Element | ShadowRoot> | HydrationRenderer
 
 let enabledHydration = false
 
+// STUDY 01 执行流程 => 02 ensureRenderer
 function ensureRenderer() {
   return (
     renderer ||
@@ -62,6 +63,7 @@ export const hydrate = ((...args) => {
   ensureHydrationRenderer().hydrate(...args)
 }) as RootHydrateFunction
 
+// STUDY 01 执行流程 => 01 createApp
 export const createApp = ((...args) => {
   const app = ensureRenderer().createApp(...args)
 
@@ -69,7 +71,8 @@ export const createApp = ((...args) => {
     injectNativeTagCheck(app)
     injectCompilerOptionsCheck(app)
   }
-
+  // STUDY 01 补充说明 => 为什么要先从 app 里解构出 mount 然后再挂载到 app 上?
+  // 看起来是对 mount 进行一层拦截，然后调用
   const { mount } = app
   app.mount = (containerOrSelector: Element | ShadowRoot | string): any => {
     const container = normalizeContainer(containerOrSelector)

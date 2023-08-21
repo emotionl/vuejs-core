@@ -309,6 +309,7 @@ export function createHydrationRenderer(
   return baseCreateRenderer(options, createHydrationFunctions)
 }
 
+// STUDY 01 补充说明 => baseCreateRenderer 函数重载
 // overload 1: no hydration
 function baseCreateRenderer<
   HostNode = RendererNode,
@@ -354,6 +355,7 @@ function baseCreateRenderer(
 
   // Note: functions inside this closure should use `const xxx = () => {}`
   // style in order to prevent being inlined by minifiers.
+  // STUDY 01 补充说明 => patch 函数用于确定是否需要更新 DOM
   const patch: PatchFn = (
     n1,
     n2,
@@ -411,6 +413,7 @@ function baseCreateRenderer(
         break
       default:
         if (shapeFlag & ShapeFlags.ELEMENT) {
+          // STUDY 01 执行流程 => 09 processElement
           processElement(
             n1,
             n2,
@@ -423,6 +426,7 @@ function baseCreateRenderer(
             optimized
           )
         } else if (shapeFlag & ShapeFlags.COMPONENT) {
+          // STUDY 01 执行流程 => 08 processComponent
           processComponent(
             n1,
             n2,
@@ -1166,6 +1170,7 @@ function baseCreateRenderer(
           optimized
         )
       } else {
+        // STUDY 01 执行流程 => 08-01 mountComponent
         mountComponent(
           n2,
           container,
@@ -1194,6 +1199,7 @@ function baseCreateRenderer(
     // mounting
     const compatMountInstance =
       __COMPAT__ && initialVNode.isCompatRoot && initialVNode.component
+    // STUDY 01 执行流程 => 08-02 createComponentInstance
     const instance: ComponentInternalInstance =
       compatMountInstance ||
       (initialVNode.component = createComponentInstance(
@@ -1221,6 +1227,7 @@ function baseCreateRenderer(
       if (__DEV__) {
         startMeasure(instance, `init`)
       }
+      // STUDY 01 执行流程 => 08-03 setupComponent
       setupComponent(instance)
       if (__DEV__) {
         endMeasure(instance, `init`)
@@ -1241,6 +1248,7 @@ function baseCreateRenderer(
       return
     }
 
+    // STUDY 01 执行流程 => 08-04 setupRenderEffect
     setupRenderEffect(
       instance,
       initialVNode,
@@ -1374,6 +1382,7 @@ function baseCreateRenderer(
           if (__DEV__) {
             startMeasure(instance, `patch`)
           }
+          // STUDY 01 执行流程 => 08-05 update patch
           patch(
             null,
             subTree,
@@ -1491,6 +1500,7 @@ function baseCreateRenderer(
         if (__DEV__) {
           startMeasure(instance, `patch`)
         }
+        // STUDY 01 执行流程 => 08-05 mount patch
         patch(
           prevTree,
           nextTree,
@@ -2323,6 +2333,7 @@ function baseCreateRenderer(
         unmount(container._vnode, null, null, true)
       }
     } else {
+      // STUDY 01 执行流程 => 07 patch
       patch(container._vnode || null, vnode, container, null, null, null, isSVG)
     }
     flushPreFlushCbs()
@@ -2354,6 +2365,7 @@ function baseCreateRenderer(
   return {
     render,
     hydrate,
+    // STUDY 01 执行流程 => 03 createAppAPI
     createApp: createAppAPI(render, hydrate)
   }
 }
