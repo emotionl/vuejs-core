@@ -23,5 +23,6 @@
       "background": "#E6C62E",
       "foreground": "#191324"
     }
-  }
+  },
+  "todo-tree.tree.sortTagsOnlyViewAlphabetically": true
 }
